@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <!-- Level 1: Root Menu -->
-    <menuitem id="menu_estate_root" name="Estate Management" sequence="1"/>
+    
+<menuitem id="estate_menu_root" name="Real Estate">
+    <menuitem id="estate_menu_advertisements" name="Advertisements">
+        <menuitem id="estate_menu_properties" action="estate_property_action"/>
+    </menuitem>
+</menuitem>
 
-    <!-- Level 2: Submenu under the root for Properties -->
-    <menuitem id="menu_estate_management" name="Property Management"
-              parent="menu_estate_root" sequence="10"/>
-
-    <!-- Level 3: Submenu that opens the estate.property model -->
-    <menuitem id="menu_estate_property" name="Properties"
-              parent="menu_estate_management" action="action_estate_property" sequence="10"/>
 </odoo>

@@ -1,23 +1,22 @@
 from odoo import fields, models
+from datetime import datetime
+from dateutil import relativedelta
 
 
 class EstateProperty(models.Model):
-    _name = "estate_property"
+    _name = "estate.property"
     _description = "Real Estate Property"
-    _postcode = fields.Char(string="Postcode")
-    _date_availability = fields.Date(string="Available From", copy=False)
-    _expected_price = fields.Float(string="Expected Price")
-    _sell_price = fields.Float(string="Sell Price", readonly=True, copy=False)
-    _bedrooms = fields.Integer(string="Bedrooms")
-    _living_area = fields.Integer(string="Living Area")
-    _facade = fields.Selection(
-        [("brick", "Brick"), ("stone", "Stone"), ("wood", "Wood")],
-        string="Facade",
-    )
-    _garage = fields.Boolean(string="Garage")
-    _garden = fields.Boolean(string="Garden")
-    _garden_area = fields.Integer(string="Garden Area")
-    _garden_orientation = fields.Selection(
+
+    name = fields.Char(string="Name", required=True)
+    active = fields.Boolean(string="Active", default=True)
+    description = fields.Text()
+
+    postcode = fields.Char(string="Postcode")
+    expected_price = fields.Float(string="Expected Price")
+    bedrooms = fields.Integer(string="Bedrooms", default=2)
+    facade = fields.Integer(string="Facade")
+    garden = fields.Boolean(string="Garden")
+    garden_orientation = fields.Selection(
         [
             ("north", "North"),
             ("south", "South"),
@@ -27,13 +26,15 @@ class EstateProperty(models.Model):
         string="Garden Orientation",
     )
 
-    name = fields.Char(required=True)
-    description = fields.Text()
-    _expected_price = fields.Float(required=True)
+    date_availability = fields.Date(
+        string="Available From",
+        copy=False,
+        default=datetime.today() + relativedelta.relativedelta(months=3),
+    )
 
-    availability_date = fields.Date(
-        string="Availability Date", copy=False
-    )  # Prevent copying
-    selling_price = fields.Float(
-        string="Selling Price", readonly=True, copy=False
-    )  # Read-only and no copying
+    sell_price = fields.Float(string="Sell Price", readonly=True, copy=False)
+
+    living_area = fields.Integer(string="Living Area")
+
+    garage = fields.Boolean(string="Garage")
+    garden_area = fields.Integer(string="Garden Area")
